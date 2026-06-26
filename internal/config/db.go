@@ -8,20 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
-func ConnectDatabase(cfg *Config) *gorm.DB {
-	if cfg == nil || cfg.DSN == "" {
-		log.Fatal("Database DSN is empty")
-	}
-
-	db, err := gorm.Open(postgres.New(postgres.Config{
-		DSN:                  cfg.DSN,
-		PreferSimpleProtocol: true,
-	}), &gorm.Config{
-		TranslateError: true,
-		PrepareStmt:    false,
-	})
+func ConnectDatabase(cfg *Config) *gorm.DB { 
+	db, err := gorm.Open(postgres.Open(cfg.DSN), &gorm.Config{TranslateError: true})
 	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err)
+		log.Fatal("Failed to connect to database")
 	} else {
 		fmt.Println("Database connection successful")
 	}

@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	"fmt"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -14,15 +14,27 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading env file")
+	if err := godotenv.Load(); err != nil {
+		if !os.IsNotExist(err) {
+			return nil, fmt.Errorf("load .env file: %w", err)
+		}
 	}
 
-	return &Config{
+	cfg := &Config{
 		DSN:          os.Getenv("DSN"),
 		PORT:         os.Getenv("PORT"),
 		JWTSecretKey: os.Getenv("JWT_SECRET_KEY"),
-	}, nil
+	}
+
+	if cfg.DSN == "" {
+		return nil, fmt.Errorf("DSN is required")
+	}
+	if cfg.PORT == "" {
+		cfg.PORT = "8080"
+	}
+	if cfg.JWTSecretKey == "" {
+		return nil, fmt.Errorf("JWT_SECRET_KEY is required")
+	}
+
+	return cfg, nil
 }
