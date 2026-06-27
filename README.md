@@ -2,6 +2,8 @@
 
 A production-ready REST API for managing parking zones and reservations, built with **Go**, **Echo v5**, and **GORM**.
 
+## live link : [https://spotsync-pqf9.onrender.com/]
+
 ---
 
 ## 📦 Tech Stack
@@ -48,11 +50,8 @@ SpotSync/
 Create a `.env` file in the project root:
 
 ```env
-DB_HOST=localhost
-DB_PORT=5432
-DB_USER=postgres
-DB_PASSWORD=yourpassword
-DB_NAME=spotsync
+DNS=postgres://username:password@localhost:5432/spotsync?sslmode=disable
+PORT=8080
 JWT_SECRET_KEY=your-super-secret-key
 ```
 
@@ -62,7 +61,7 @@ JWT_SECRET_KEY=your-super-secret-key
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/spotsync.git
+git clone https://github.com/asraful-07/SpotSync
 cd spotsync
 
 # 2. Install dependencies
@@ -174,7 +173,7 @@ Roles: `driver` · `admin`
   "data": {
     "id": 105,
     "user_id": 1,
-    "zone_id": 5,
+    "zone_id": 8,
     "license_plate": "ABC-1234",
     "status": "active",
     "created_at": "2026-06-20T15:30:00Z",
@@ -191,11 +190,11 @@ Roles: `driver` · `admin`
   "message": "My reservations retrieved successfully",
   "data": [
     {
-      "id": 105,
+      "id": 10,
       "license_plate": "ABC-1234",
       "status": "active",
       "zone": {
-        "id": 5,
+        "id": 8,
         "name": "Terminal 1 EV Charging",
         "type": "ev_charging"
       },
